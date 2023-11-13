@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <title>REST-Countries_API</title>
+  </head>
+  <body>
+    <h1 style="padding: 4%">REST Countries</h1>
+    <div
+      class="container"
+      style="margin-left: auto; margin-right: auto; padding-top: 5%"
+    >
+      <h3>Population</h3>
+      <div class="card">
+        <div class="card-body">This is some text within a card body.</div>
+      </div>
+      <p style="padding-top: 5%">Selecciona el país</p>
+      <select class="form-select" aria-label="Default select example">
+        <option value="Mexico">Mexico</option>
+        <option value="Bolivia">Bolivia</option>
+        <option value="Colombia">Colombia</option>
+      </select>
+    </div>
+    <script>
+      console.log("hello");
+      var selectElement = document.querySelector(".form-select");
+      var selectedValue = "Mexico";
+      console.log(selectedValue);
+      selectElement.addEventListener("change", function () {
+        selectedValue = selectElement.value;
+
+        console.log(selectedValue);
+        callRestCountries();
+      });
+      const callRestCountries = async () => {
+        try {
+          console.log("hola");
+
+          const response = await fetch(
+            `https://restcountries.com/v3.1/name/${selectedValue}?fullText=true`
+          );
+          const rCountriesData = await response.json();
+          console.log(rCountriesData[0].population);
+          var cardElement = document.querySelector(".card");
+
+          var cardBodyElement = cardElement.querySelector(".card-body");
+
+          cardBodyElement.textContent = rCountriesData[0].population;
+
+          console.log(cardBodyElement.textContent);
+        } catch (e) {
+          alert("error");
+          console.log("error");
+        }
+      };
+
+      callRestCountries();
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
